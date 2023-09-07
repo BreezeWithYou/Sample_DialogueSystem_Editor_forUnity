@@ -5,26 +5,58 @@ This is a simple dialogue system editor for Unity, you can configure the dialogu
 # 可视化对话系统插件的使用
 
 * 添加对应的脚本
-  ![](./pircture/2023-09-07-13-14-04-image.png)
+
+![](./pircture/2023-09-07-13-14-04-image.png)
+
+
 
 * 输入文件名来创建对应的文件（默认路径是Assets/Resources/DialogueFile）
-  ![](./pircture/2023-09-07-13-14-53-image.png)
+
+![](./pircture/2023-09-07-13-14-53-image.png)
+
+
 
 * 创建完成后可以打开对话编辑器
-  ![](./pircture/2023-09-07-13-16-27-image.png)
 
-* 通过CreateNode 按钮可以创建结点，一定在编辑后通过Save Data 进行保存![](./pircture/2023-09-07-13-18-04-image.png)
-  ![](./pircture/2023-09-07-13-18-33-image.png)
+![](./pircture/2023-09-07-13-16-27-image.png)
+
+
+
+* 通过CreateNode 按钮可以创建结点，一定在编辑后通过Save Data 进行保存
+
+![](./pircture/2023-09-07-13-18-04-image.png)
+
+
+
+![](./pircture/2023-09-07-13-18-33-image.png)
+
+
 
 * 选择同名文件
-  ![](./pircture/2023-09-07-13-19-06-image.png)
+
+![](./pircture/2023-09-07-13-19-06-image.png)
+
+
+
 
 * 在游戏运行之后可以通过，Container 进行访问
-  ![](./pircture/2023-09-07-13-19-43-image.png)
+
+![](./pircture/2023-09-07-13-19-43-image.png)
+
+
+
+![](./pircture/2023-09-07-13-20-52-image.png)
+
+
 
 * 设计人员可以在Button 上绑定如下函数实现对对话的切换
-  ![](./pircture/2023-09-07-13-20-52-image.png)
+
+* 
+  
   ![](./pircture/2023-09-07-13-21-22-image.png)
+  
+  
+  
   
   # 插件的功能实现原理
   
