@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.iOS;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -36,14 +30,6 @@ public class GraphSaveUtility
         if (!Edges.Any()) return;
         // 定义一个对话的容器用来存储数据
         var dialogueContainer = ScriptableObject.CreateInstance<DialogueContainer>();
-        
-        //if (!SaveNodes(fileName, dialogueContainer)) return;
-        //SaveExposedProperties(dialogueContainer);
-        //SaveCommentBlocks(dialogueContainer);
-
-        if (!AssetDatabase.IsValidFolder("Assets/Resources"))
-            AssetDatabase.CreateFolder("Assets", "Resources");
-
         var connectedPorts = Edges.Where(x => x.input.node != null).ToArray();
         for(int i = 0; i < connectedPorts.Length; i++)
         {
@@ -67,31 +53,13 @@ public class GraphSaveUtility
                 Position = dialogueNode.GetPosition().position
             });
         }
-
-        AssetDatabase.CreateAsset(dialogueContainer,$"Assets/Resources/{fileName}.asset");
+        DialogueResourceLoad.CreateAsset(dialogueContainer, fileName);
         AssetDatabase.SaveAssets();
-    }
-
-    private bool SaveNodes(string fileName, DialogueContainer dialogueContainerObject)
-    {
-
-
-        return true;
-    }
-
-    private void SaveExposedProperties(DialogueContainer dialogueContainer)
-    {
-
-    }
-
-    private void SaveCommentBlocks(DialogueContainer dialogueContainer)
-    {
-
     }
 
     public void LoadGraph(string fileName)
     {
-        _contaninerCache = Resources.Load<DialogueContainer>(fileName);
+        _contaninerCache = DialogueResourceLoad.ResourcesLoad(fileName);
         if (_contaninerCache == null)
         {
             EditorUtility.DisplayDialog("File Not Found","该文件名不存在","OK");
@@ -100,15 +68,15 @@ public class GraphSaveUtility
         ClearGraph();
         GenerateDialogueNodes();
         ConnectDialogueNodes();
-        //AddExposedProperties();
-        //GenerateCommentBlocks();
     }
 
     /// <summary>
-    /// Set Entry point GUID then Get All Nodes, remove all and their edges. Leave only the entrypoint node. (Remove its edge too)
+    /// 在重新加载时要清除全部的结点
     /// </summary>
     private void ClearGraph()
     {
+        if (_contaninerCache.DialogueNodeData.Count == 0)
+            return;
         Nodes.Find(x => x.EntryPoint).GUID = _contaninerCache.NodeLinks[0].BaseNodeGUID; 
         foreach (var perNode in Nodes)
         {
@@ -120,7 +88,7 @@ public class GraphSaveUtility
     }
 
     /// <summary>
-    /// Create All serialized nodes and assign their guid and dialogue text to them
+    /// 生成结点
     /// </summary>
     private void GenerateDialogueNodes()
     {
@@ -135,6 +103,9 @@ public class GraphSaveUtility
         }
     }
 
+    /// <summary>
+    /// 连接结点
+    /// </summary>
     private void ConnectDialogueNodes()
     {
         for (var i = 0; i < Nodes.Count; i++)
@@ -165,13 +136,4 @@ public class GraphSaveUtility
         _targetGraphView.Add(tempEdge);
     }
 
-    private void AddExposedProperties()
-    {
-
-    }
-
-    private void GenerateCommentBlocks()
-    {
-        
-    }
 }

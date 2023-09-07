@@ -30,7 +30,12 @@ public class DialogueGraphView : GraphView
 
         AddElement(GenerateEntryPointNode());
     }
-
+    /// <summary>
+    /// 重写了连接接口函数
+    /// </summary>
+    /// <param name="startPort"></param>
+    /// <param name="nodeAdapter"></param>
+    /// <returns></returns>
     public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
     {
         var compatiblePorts = new List<Port>();
